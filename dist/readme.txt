@@ -1,0 +1,1 @@
+/dist folder must be in .gitignore file

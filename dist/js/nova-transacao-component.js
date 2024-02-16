@@ -1,9 +1,3 @@
-let saldo = 3000;
-alert("teste compilacao");
-const elementoSaldo = document.querySelector(".saldo-valor .valor");
-if (elementoSaldo != null) {
-    elementoSaldo.textContent = saldo.toString();
-}
 const elementoFormulario = document.querySelector(".block-nova-transacao form");
 //console.log(elementoFormulario);
 elementoFormulario.addEventListener("submit", function () {
@@ -14,15 +8,16 @@ elementoFormulario.addEventListener("submit", function () {
     const inputTipoTransacao = elementoFormulario.querySelector("#tipoTransacao");
     const inputValor = elementoFormulario.querySelector("#valor");
     const inputData = elementoFormulario.querySelector("#data");
-    let tipoTransacao = inputTipoTransacao.value;
+    //let tipoTransacao: string = inputTipoTransacao.value;
+    let tipoTransacao = inputTipoTransacao.value; //a string vinda do formular deve estar contida no enum criado TipoTransacao
     let valor = inputValor.valueAsNumber;
     let data = new Date(inputData.value);
     //valor = Number(valor);
-    if (tipoTransacao == "Depósito") {
+    if (tipoTransacao == TipoTransacao.DEPOSITO) {
         saldo += valor;
     }
-    else if (tipoTransacao == "Transferência" ||
-        tipoTransacao == "Pagamento de Boleto") {
+    else if (tipoTransacao == TipoTransacao.TRANSFERENCIA ||
+        tipoTransacao == TipoTransacao.PAGAMENTO_BOLETO) {
         saldo -= valor;
     }
     else {
