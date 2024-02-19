@@ -1,6 +1,7 @@
 import { Transacao } from "../types/Transacao.js";
 import { TipoTransacao } from "../types/TipoTransacao.js";
-import { atualizarSaldo, getSaldo } from "./saldo-component.js";
+import SaldoComponent from "./saldo-component.js";
+import Conta from "../types/Conta.js";
 
 const elementoFormulario = document.querySelector(
   ".block-nova-transacao form"
@@ -26,29 +27,6 @@ elementoFormulario.addEventListener("submit", function () {
   let tipoTransacao: TipoTransacao = inputTipoTransacao.value as TipoTransacao; //a string vinda do formular deve estar contida no enum criado TipoTransacao
   let valor: number = inputValor.valueAsNumber;
   let data: Date = new Date(inputData.value);
-  let saldo: number = getSaldo();
-
-  //valor = Number(valor);
-
-  if (tipoTransacao == TipoTransacao.DEPOSITO) {
-    saldo += valor;
-    console.log("Passou deposito saldo => " + saldo.toString());
-  } else if (
-    tipoTransacao == TipoTransacao.TRANSFERENCIA ||
-    tipoTransacao == TipoTransacao.PAGAMENTO_BOLETO
-  ) {
-    saldo -= valor;
-  } else {
-    alert("Tipo de transação inválida!");
-    return;
-  }
-
-  // elementoSaldo.textContent = saldo.toLocaleString("pt-br", {
-  //   currency: "BRL",
-  //   style: "currency",
-  // });
-
-  atualizarSaldo(saldo);
 
   const novaTransacao: Transacao = {
     tipoTransacao: tipoTransacao,
@@ -56,6 +34,8 @@ elementoFormulario.addEventListener("submit", function () {
     data: data,
   };
 
-  console.log(novaTransacao);
+  Conta.registrarTransacao(novaTransacao);
+  SaldoComponent.atualizar();
+
   elementoFormulario.reset();
 });
