@@ -1,6 +1,6 @@
-import { formatarMoeda } from "../utils/formatters.js";
 import { Transacao } from "../types/Transacao.js";
 import { TipoTransacao } from "../types/TipoTransacao.js";
+import { atualizarSaldo, getSaldo } from "./saldo-component.js";
 
 const elementoFormulario = document.querySelector(
   ".block-nova-transacao form"
@@ -26,11 +26,13 @@ elementoFormulario.addEventListener("submit", function () {
   let tipoTransacao: TipoTransacao = inputTipoTransacao.value as TipoTransacao; //a string vinda do formular deve estar contida no enum criado TipoTransacao
   let valor: number = inputValor.valueAsNumber;
   let data: Date = new Date(inputData.value);
+  let saldo: number = getSaldo();
 
   //valor = Number(valor);
 
   if (tipoTransacao == TipoTransacao.DEPOSITO) {
     saldo += valor;
+    console.log("Passou deposito saldo => " + saldo.toString());
   } else if (
     tipoTransacao == TipoTransacao.TRANSFERENCIA ||
     tipoTransacao == TipoTransacao.PAGAMENTO_BOLETO
@@ -46,7 +48,7 @@ elementoFormulario.addEventListener("submit", function () {
   //   style: "currency",
   // });
 
-  elementoSaldo.textContent = formatarMoeda(saldo);
+  atualizarSaldo(saldo);
 
   const novaTransacao: Transacao = {
     tipoTransacao: tipoTransacao,

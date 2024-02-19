@@ -3,6 +3,7 @@ import { FormatoData } from "../types/FormatoData.js";
 
 let saldo: number = 3000;
 
+console.log("Saldo Inicial => " + saldo.toString());
 // alert("teste compilacao");
 const elementoSaldo = document.querySelector(
   ".saldo-valor .valor"
@@ -24,4 +25,17 @@ if (elementoDataAcesso) {
     dataAcesso,
     FormatoData.DIA_SEMANA_DIA_MES_ANO
   );
+}
+
+export function getSaldo(): number {
+  return saldo;
+}
+
+atualizarSaldo(saldo);
+
+export function atualizarSaldo(novoSaldo: number): void {
+  saldo = novoSaldo;
+  if (elementoSaldo) {
+    elementoSaldo.textContent = formatarMoeda(saldo);
+  }
 }
