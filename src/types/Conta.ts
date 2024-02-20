@@ -1,6 +1,6 @@
-import { GrupoTransacao } from "./GrupoTransacao";
-import { TipoTransacao } from "./TipoTransacao";
-import { Transacao } from "./Transacao";
+import { GrupoTransacao } from "./GrupoTransacao.js";
+import { TipoTransacao } from "./TipoTransacao.js";
+import { Transacao } from "./Transacao.js";
 
 export class Conta {
   nome: string;
@@ -19,6 +19,11 @@ export class Conta {
   constructor(nome: string) {
     this.nome = nome;
   }
+
+  public geTitular() {
+    return this.nome;
+  }
+
   getGruposTransacoes(): GrupoTransacao[] {
     const gruposTransacoes: GrupoTransacao[] = [];
     const listaTrasacoes: Transacao[] = structuredClone(this.transacoes);
@@ -93,5 +98,5 @@ export class Conta {
 }
 
 const conta = new Conta("Joana da Silva Oliveira");
-
+console.log(conta.geTitular());
 export default conta;
