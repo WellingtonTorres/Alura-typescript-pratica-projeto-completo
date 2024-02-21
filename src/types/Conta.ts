@@ -95,6 +95,17 @@ export class Conta {
   }
 }
 
+export class ContaPremium extends Conta {
+  registrarTransacao(transacao: Transacao): void {
+    if (transacao.tipoTransacao === TipoTransacao.DEPOSITO) {
+      console.log("Ganhou 0.50 centavos");
+      transacao.valor += 0.5;
+    }
+    super.registrarTransacao(transacao);
+  }
+}
+
 const conta = new Conta("Joana da Silva Oliveira");
+const contaPremium = new ContaPremium("Wellington");
 console.log(conta.geTitular());
 export default conta;
